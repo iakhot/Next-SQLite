@@ -1,16 +1,16 @@
 import prisma from "@/db";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
     try {
         const testData = await prisma.test.findMany();
         return NextResponse.json({
             testData
         });
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json({
             msg: 'Failed to retrieve data',
-            error: error.message
+            error: (error as Error).message
         }, { status: 500 });
     }
 };
@@ -38,10 +38,10 @@ export const POST = async (req: Request) => {
             msg: 'Record created successfully',
             author: newRecord
         });
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json({
             msg: 'Failed to create the author',
-            error: error.message
+            error: (error as Error).message
         }, { status: 500 });
     }
 };
